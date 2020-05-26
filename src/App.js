@@ -13,7 +13,8 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons
+    // const persons = this.state.persons //! not good because you actually changing the original state
+    const persons = [...this.state.persons] //* instead, make a copy of the state using spread statements
     persons.splice(personIndex, 1)
     this.setState({
       persons: persons,
