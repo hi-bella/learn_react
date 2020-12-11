@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person';
 
 // class components
@@ -50,6 +51,26 @@ class App extends Component {
   render(){
     let persons = null
 
+    const style = {
+      border: "black 1px solid",
+      padding: "10px",
+      color: "white",
+      backgroundColor: "green",
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
+    };
+
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push("red");
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push("bold");
+    }
+
     if (this.state.showPerson){
       persons = (
         <div>
@@ -66,15 +87,28 @@ class App extends Component {
           })}
           </div>
       )
+      
+      style.backgroundColor = "red";
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
     return (
-      <div className="App">
-        <h1>Hi, I'm Bella</h1>
-        <button onClick={this.togglePersonHandler}>Switch Name</button>
-        {persons}
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm Bella</h1>
+          <p className={classes.join(' ')}>Hi this is working</p>
+          <button 
+            style={style}
+            onClick={this.togglePersonHandler}>
+              Switch Name
+          </button>
+          {persons}
+            
           
-        
-      </div>
+        </div>
+        </StyleRoot>
       //React.createElement("div", {className: 'App'}, React.createElement("h1", null, "Does this work now?"))
     );
   } 
@@ -82,4 +116,4 @@ class App extends Component {
 
 // functional component using react hooks
 
-export default App;
+export default Radium(App);
