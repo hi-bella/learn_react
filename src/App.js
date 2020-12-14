@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium, {StyleRoot} from 'radium';
+import styled from 'styled-components';
 import Person from './Person/Person';
 
 // class components
+
+const StyleButton = styled.button`
+  border: black 1px solid;
+  padding: 10px;
+  color: white;
+  background-color: ${props => props.alt ? 'red' : 'green'};
+  cursor: pointer;
+  
+  &:hover {
+    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+    color: black;
+  }
+`
 class App extends Component {
   state = {
     persons : [
@@ -49,7 +62,7 @@ class App extends Component {
   }
 
   render(){
-    let persons = null
+    let persons = null;
 
     const style = {
       border: "black 1px solid",
@@ -62,7 +75,6 @@ class App extends Component {
         color: 'black'
       }
     };
-
     const classes = [];
     if (this.state.persons.length <= 2) {
       classes.push("red");
@@ -95,20 +107,16 @@ class App extends Component {
       }
     }
     return (
-      <StyleRoot>
         <div className="App">
           <h1>Hi, I'm Bella</h1>
           <p className={classes.join(' ')}>Hi this is working</p>
-          <button 
-            style={style}
-            onClick={this.togglePersonHandler}>
+          <StyleButton alt={this.state.showPerson} onClick={this.togglePersonHandler}>
               Switch Name
-          </button>
+          </StyleButton>
           {persons}
             
           
         </div>
-        </StyleRoot>
       //React.createElement("div", {className: 'App'}, React.createElement("h1", null, "Does this work now?"))
     );
   } 
@@ -116,4 +124,4 @@ class App extends Component {
 
 // functional component using react hooks
 
-export default Radium(App);
+export default App;
